@@ -1,0 +1,20 @@
+.btn{
+  margin-top: 15px;
+  padding: 4px 7px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.btn:hover{
+  background-color: silver;
+  cursor: pointer;
+}
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px lightskyblue;
+}
+.btn:active{
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+}

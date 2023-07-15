@@ -1,0 +1,16 @@
+.input{
+  margin-top: 15px;
+  padding: 4px 7px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px lightskyblue;
+}
+.input[type=submit]:active{
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+}
