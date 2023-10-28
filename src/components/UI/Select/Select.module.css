@@ -1,16 +1,11 @@
-.input{
+.select{
   margin-top: 15px;
   padding: 4px 7px;
   border: 2px solid black;
   border-radius: 10px;
   background-color: white;
 }
-.input:focus {
+.select:focus {
   outline: none;
   box-shadow: 0 0 0 3px lightskyblue;
-}
-.input[type=submit]:active{
-  border: 2px solid black;
-  color: white;
-  background-color: black;
 }
