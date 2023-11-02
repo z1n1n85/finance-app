@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './styles/App.css'
-import TransactionList from './components/TransactionList';
-import TransactionForm from './components/TransactionForm';
-import Modal from './components/UI/Modal/Modal'
-import Button from './components/UI/Button/Button'
-import TransactionFilter from './components/TransactionFilter';
+import './components/Transaction.jsx'
+import Transaction from './components/Transaction.jsx';
 
 export default function App() {
   const [transactions, setTransactions] = useState([
@@ -54,7 +51,6 @@ export default function App() {
         (a, b) => b[parametr] - a[parametr]
       ))
   }
-  const [visibleModalTransactionForm, setVisibleModalTransactionForm] = useState(false);
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
   }
@@ -63,17 +59,13 @@ export default function App() {
   }
   return (
     <div className="App">
-      <Button onClick={() => setVisibleModalTransactionForm(true)}>
-        Добавить операцию
-      </Button>
-      <TransactionFilter sortTransactions={sortTransactions}/>
-      <TransactionList 
-        transactions={sortedTransactions}
+      <Transaction
+        sortTransactions={sortTransactions}
+        sortedTransactions={sortedTransactions}
         removeTransaction={removeTransaction}
+        addTransaction={addTransaction}
       />
-      <Modal visible={visibleModalTransactionForm} setVisible={setVisibleModalTransactionForm}>
-        <TransactionForm addTransaction={addTransaction} setVisible={setVisibleModalTransactionForm}/>
-      </Modal>
+      
     </div>
   );
 }
