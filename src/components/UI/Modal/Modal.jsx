@@ -12,6 +12,12 @@ export default function Modal({children, visible, setVisible}) {
         className={css.container}
         onClick={e => e.stopPropagation()}
       >
+        <button
+          className={css.buttonClose}
+          onClick={() => setVisible(false)}
+        >
+          X
+        </button>
         {children}
       </div>
     </div>

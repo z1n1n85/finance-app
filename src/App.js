@@ -54,7 +54,7 @@ export default function App() {
         (a, b) => b[parametr] - a[parametr]
       ))
   }
-  const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleModalTransactionForm, setVisibleModalTransactionForm] = useState(false);
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
   }
@@ -63,17 +63,17 @@ export default function App() {
   }
   return (
     <div className="App">
-      <Button onClick={() => setVisibleModal(true)}>
+      <Button onClick={() => setVisibleModalTransactionForm(true)}>
         Добавить операцию
       </Button>
       <TransactionFilter sortTransactions={sortTransactions}/>
-      <Modal visible={visibleModal} setVisible={setVisibleModal}>
-        <TransactionForm addTransaction={addTransaction} setVisible={setVisibleModal}/>
-      </Modal>
       <TransactionList 
         transactions={sortedTransactions}
         removeTransaction={removeTransaction}
       />
+      <Modal visible={visibleModalTransactionForm} setVisible={setVisibleModalTransactionForm}>
+        <TransactionForm addTransaction={addTransaction} setVisible={setVisibleModalTransactionForm}/>
+      </Modal>
     </div>
   );
 }
