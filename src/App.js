@@ -47,21 +47,23 @@ export default function App() {
       description: 'Пирожок в столовой',
     },
   ]);
-  const [sortedTransactions, setSortedTransactions] = useState('');
-  const sortTransactions = (parametr, direction) => {
-    (direction === 'increase')
-    ? setSortedTransactions([...sortedTransactions].sort(
-        (a, b) => a[parametr] - b[parametr]
-      ))
-    : setSortedTransactions([...sortedTransactions].sort(
-        (a, b) => b[parametr] - a[parametr]
-      ))
-  }
   const addTransaction = (transaction) => {
-    setTransactions([...transactions, transaction]);
+    setTransactions(prev => [...prev, transaction]);
   }
   const removeTransaction = (id) => {
-    setTransactions(transactions.filter((e) => e.id !== id));
+    setTransactions(prev => prev.filter((e) => e.id !== id));
+  }
+  const updateTransaction = (transaction) => {
+    removeTransaction(transaction.id);
+    addTransaction(transaction);
+  }
+  const [sortedTransactions, setSortedTransactions] = useState('');
+  const sortTransactions = (parametr, direction) => {
+    setSortedTransactions([...sortedTransactions].sort(
+      (direction === 'increase')
+      ? (a, b) => a[parametr] - b[parametr]
+      : (a, b) => b[parametr] - a[parametr]
+    ))
   }
   // ACCOUNTS
   const [accounts, setAccounts] = useState([
@@ -111,6 +113,7 @@ export default function App() {
         sortedTransactions={sortedTransactions}
         removeTransaction={removeTransaction}
         addTransaction={addTransaction}
+        updateTransaction={updateTransaction}
       />
       <AccountMain
         accounts={accounts}

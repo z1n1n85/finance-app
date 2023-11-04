@@ -6,8 +6,14 @@ import Button from './UI/Button/Button'
 import TransactionFilter from './TransactionFilter';
 
 export default function TransactionMain(
-    {accounts, sortTransactions, sortedTransactions, removeTransaction, addTransaction}
-  ) {
+  {
+    accounts,
+    sortTransactions,
+    sortedTransactions,
+    removeTransaction,
+    addTransaction,
+    updateTransaction
+  }) {
   const [visibleModalTransactionForm, setVisibleModalTransactionForm] = useState(false);
   return (
     <div>
