@@ -7,7 +7,6 @@ export default function TransactionFilter({sortTransactions}) {
   const [direction, setDirection] = useState('');
   return (
     <div>
-      <hr style={{marginTop: 10, marginBottom: 10}}/>
       <Select
         value={parametr}
         basicValue='Сортировать по'
