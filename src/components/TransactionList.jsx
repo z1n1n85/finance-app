@@ -4,13 +4,13 @@ import TransactionItem from './TransactionItem'
 export default function TransactionList({transactions, removeTransaction}) {
   if (!transactions.length) {
     return (
-      <div className='TransactionList'>
-        <h1 className='TransactionListHeader'>Операций нет</h1>
+      <div className='List'>
+        <h1 className='Header'>Операций нет</h1>
       </div>
     )
   }
   return (
-    <div className='TransactionList'>
+    <div className='List'>
       {transactions.map((transaction, index) => 
         <TransactionItem
           key={transaction.id}

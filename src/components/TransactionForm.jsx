@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import Input from './UI/Input/Input'
 import Textarea from './UI/Textarea/Textarea'
-import Button from './UI/Button/Button';
-import Select from './UI/Select/Select';
+import Button from './UI/Button/Button'
+import Select from './UI/Select/Select'
 
 
-export default function TransactionForm({addTransaction, setVisible}) {
+export default function TransactionForm({accounts, addTransaction, setVisible}) {
   const formatDate = (date) => {
     let d = new Date(date);
     let month = '' + (d.getMonth() + 1);
@@ -24,21 +24,24 @@ export default function TransactionForm({addTransaction, setVisible}) {
       time: Date.now(),
       category: '',
       cost: '',
+      account_id: '',
+      account_name: '',
       description: '',
     }
   );
   const createTransaction = (e) => {
-    if (transaction.type === 'expenses') {
-      setTransaction({...transaction, cost: transaction.cost * (-1)})
-    }
     e.preventDefault();
-    addTransaction({...transaction, id: Date.now()});
+    (transaction.type === 'expenses')
+      ? addTransaction({...transaction, cost: transaction.cost * (-1), id: Date.now()})
+      : addTransaction({...transaction, id: Date.now()})
     setTransaction({
-      id: 0, 
-      type: '', 
-      time: Date.now(), 
-      category: '', 
-      cost: '', 
+      id: 0,
+      type: '',
+      time: Date.now(),
+      category: '',
+      cost: '',
+      account_id: '',
+      account_name: '',
       description: '',
     });
   }
@@ -48,7 +51,7 @@ export default function TransactionForm({addTransaction, setVisible}) {
         Добавьте новую операцию
       </h1>
       <form
-        className='TransactionForm'
+        className='Form'
         onSubmit={(e) => {createTransaction(e); setVisible(false);}}
       >
         <Select
@@ -68,7 +71,7 @@ export default function TransactionForm({addTransaction, setVisible}) {
         />
         <Input
           value={transaction.cost}
-          onChange={e => setTransaction({...transaction, cost: e.target.value})}
+          onChange={e => setTransaction({...transaction, cost: Number(e.target.value)})}
           min='0'
           type='number'
           placeholder='Сумма' 
@@ -80,6 +83,22 @@ export default function TransactionForm({addTransaction, setVisible}) {
           type='text'
           placeholder='Категория' 
           style={{width: '50%'}}
+        />
+        <Select
+          value={transaction.account_id.toString()}
+          onChange={(e) => {
+            setTransaction({
+              ...transaction, 
+              account_id: Number(e.target.value), 
+              account_name: accounts.filter((account) => {
+                return account.id === Number(e.target.value)
+              })[0].name,
+            })
+          }}
+          basicValue='Выберете счёт операции'
+          options={accounts.map((account) => {
+            return {value: account.id, name: account.name}
+          })}
         />
         <Textarea
           value={transaction.description}

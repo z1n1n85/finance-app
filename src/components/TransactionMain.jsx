@@ -5,8 +5,8 @@ import Modal from './UI/Modal/Modal'
 import Button from './UI/Button/Button'
 import TransactionFilter from './TransactionFilter';
 
-export default function Transaction(
-    {sortTransactions, sortedTransactions, removeTransaction, addTransaction}
+export default function TransactionMain(
+    {accounts, sortTransactions, sortedTransactions, removeTransaction, addTransaction}
   ) {
   const [visibleModalTransactionForm, setVisibleModalTransactionForm] = useState(false);
   return (
@@ -20,7 +20,11 @@ export default function Transaction(
         removeTransaction={removeTransaction}
       />
       <Modal visible={visibleModalTransactionForm} setVisible={setVisibleModalTransactionForm}>
-        <TransactionForm addTransaction={addTransaction} setVisible={setVisibleModalTransactionForm}/>
+        <TransactionForm 
+          accounts={accounts}
+          addTransaction={addTransaction} 
+          setVisible={setVisibleModalTransactionForm}
+        />
       </Modal>
     </div>
   )

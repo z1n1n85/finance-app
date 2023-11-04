@@ -12,9 +12,10 @@ export default function PostTransaction({transaction, removeTransaction}) {
   }
   
   return(
-    <div className='TransactionItem'>
+    <div className='Item'>
       <h2>{transaction.cost}</h2>
       <h3>{transaction.category}</h3>
+      <p>Счёт: {transaction.account_name}</p>
       <p>{transaction.description}</p>
       <p>{formatDate(transaction.time)}</p>
       <Button onClick={() => removeTransaction(transaction.id)}>
