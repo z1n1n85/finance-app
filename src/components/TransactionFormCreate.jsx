@@ -1,11 +1,52 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Input from './UI/Input/Input'
 import Textarea from './UI/Textarea/Textarea'
 import Button from './UI/Button/Button'
 import Select from './UI/Select/Select'
 
 
-export default function TransactionForm({accounts, addTransaction, setVisible}) {
+export default function TransactionFormCreate({
+  accounts, 
+  addTransaction,
+  tags,
+  setVisible
+}) {
+    const [transaction, setTransaction] = useState(
+    {
+      id: 0,
+      type: '',
+      time: Date.now(),
+      tags: [],
+      cost: '',
+      account_id: '',
+      account_name: '',
+      description: '',
+    }
+  );
+  const [inputTag, setInputTag] = useState('');
+  const addTag = (e) => {
+    e.preventDefault();
+    // TODO всплывающее сообщение о дублировании тегов
+    setTransaction(prev => {
+      return {...prev, tags: [...prev.tags, inputTag] }
+    })
+  }
+  const removeTag = (e, tag) => {
+    e.preventDefault();
+    setTransaction(prev => {
+      return {...prev, tags: prev.tags.filter((eTag) => eTag !== tag)}
+    })
+  }
+  const initRankedTags = () => {
+    let rankedTags = [];
+    tags.sort((a, b) => a[1] - b[1]);
+    rankedTags = tags.map((e) => e[0])
+    return rankedTags;
+  }
+  const [rankedTags, setRankedTags] = useState(initRankedTags);
+  useEffect(() => {
+    setRankedTags(initRankedTags());
+  }, [tags]);
   const formatDate = (date) => {
     let d = new Date(date);
     let month = '' + (d.getMonth() + 1);
@@ -17,19 +58,8 @@ export default function TransactionForm({accounts, addTransaction, setVisible}) 
       day = '0' + day;
     return [year, month, day].join('-');
   }
-  const [transaction, setTransaction] = useState(
-    {
-      id: 0,
-      type: '',
-      time: Date.now(),
-      category: '',
-      cost: '',
-      account_id: '',
-      account_name: '',
-      description: '',
-    }
-  );
   const createTransaction = (e) => {
+    console.log('create transactions')
     e.preventDefault();
     (transaction.type === 'expenses')
       ? addTransaction({...transaction, cost: transaction.cost * (-1), id: Date.now()})
@@ -38,7 +68,7 @@ export default function TransactionForm({accounts, addTransaction, setVisible}) 
       id: 0,
       type: '',
       time: Date.now(),
-      category: '',
+      tags: [],
       cost: '',
       account_id: '',
       account_name: '',
@@ -78,12 +108,28 @@ export default function TransactionForm({accounts, addTransaction, setVisible}) 
           style={{width: '50%'}}
         />
         <Input
-          value={transaction.category}
-          onChange={e => setTransaction({...transaction, category: e.target.value})}
+          value={inputTag}
+          onChange={(e) => setInputTag(e.target.value)}
+          list='tags_datalist'
           type='text'
-          placeholder='Категория' 
+          placeholder='Тэги'
           style={{width: '50%'}}
         />
+        <datalist id='tags_datalist'>
+          {rankedTags.map((rankedTag) => 
+            <option value={rankedTag}/>
+          )}
+        </datalist>
+        {(inputTag !== '' && !transaction.tags.includes(inputTag))
+          ? <Button onClick={(e) => addTag(e)}> Добавить тег </Button>
+          : <Button disabled > Добавить тег </Button>
+        }
+        {transaction.tags.map((tag) => 
+          <span>
+            <h4 className='Tag'>{tag}</h4>
+            <Button onClick={(e) => removeTag(e, tag)}>Удалить тег</Button>
+          </span>
+        )}
         <Select
           value={transaction.account_id.toString()}
           onChange={(e) => {
@@ -105,7 +151,7 @@ export default function TransactionForm({accounts, addTransaction, setVisible}) 
           onChange={e => setTransaction({...transaction, description: e.target.value})}
           placeholder='Описание'
         />
-        {(transaction.cost && transaction.category && transaction.type)
+        {(transaction.cost && transaction.type)
           ? <Button type='submit'> Добавить </Button>
           : <Button type='submit' disabled>Добавить</Button>
         }

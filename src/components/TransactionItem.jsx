@@ -14,7 +14,10 @@ export default function PostTransaction({transaction, removeTransaction}) {
   return(
     <div className='Item'>
       <h2>{transaction.cost}</h2>
-      <h3>{transaction.category}</h3>
+      <h4>{transaction.tags.map((tag, index) =>
+        <span
+          className='Tag' key={index}>{tag}</span>
+      )}</h4>
       <p>Счёт: {transaction.account_name}</p>
       <p>{transaction.description}</p>
       <p>{formatDate(transaction.time)}</p>

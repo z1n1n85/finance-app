@@ -1,19 +1,35 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import TransactionList from './TransactionList';
-import TransactionForm from './TransactionForm';
+import TransactionFormCreate from './TransactionFormCreate';
 import Modal from './UI/Modal/Modal'
 import Button from './UI/Button/Button'
 import TransactionFilter from './TransactionFilter';
 
-export default function TransactionMain(
-  {
-    accounts,
-    sortTransactions,
-    sortedTransactions,
-    removeTransaction,
-    addTransaction,
-    updateTransaction
-  }) {
+export default function TransactionMain({
+  transactions,
+  accounts,
+  sortTransactions,
+  sortedTransactions,
+  removeTransaction,
+  addTransaction,
+  updateTransaction,
+}) {
+  const initTags = () => {
+    let tags = [];
+    transactions.forEach((transaction) => {
+      transaction.tags.forEach((tag) => {
+        (tags.filter((e) => e[0] === tag).length)
+        ? tags.filter((e) => e[0] === tag)[0][1] += 1
+        : tags.push([tag, 1])
+      })
+    });
+    return tags;
+  } 
+  const [tags, setTags] = useState(initTags);
+  useEffect(() => {
+    setTags(initTags());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions]);
   const [visibleModalTransactionForm, setVisibleModalTransactionForm] = useState(false);
   return (
     <div>
@@ -26,9 +42,10 @@ export default function TransactionMain(
         removeTransaction={removeTransaction}
       />
       <Modal visible={visibleModalTransactionForm} setVisible={setVisibleModalTransactionForm}>
-        <TransactionForm 
+        <TransactionFormCreate 
           accounts={accounts}
-          addTransaction={addTransaction} 
+          addTransaction={addTransaction}
+          tags={tags} 
           setVisible={setVisibleModalTransactionForm}
         />
       </Modal>

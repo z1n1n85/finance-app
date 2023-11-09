@@ -10,7 +10,7 @@ export default function App() {
       id: 1697716121476,
       time: 1697716121476,
       type: 'expenses',
-      category: 'Кафе',
+      tags: ['Кафе', 'Перекус'],
       cost: -500,
       account_id: 1,
       account_name: 'Mastercard',
@@ -20,7 +20,7 @@ export default function App() {
       id: 1697816121476,
       time: 1697816121476,
       type: 'income',
-      category: 'Зарплата',
+      tags: ['Зарплата'],
       cost: 3000,
       account_id: 1,
       account_name: 'Mastercard',
@@ -30,7 +30,7 @@ export default function App() {
       id: 1697716541476,
       time: 1697716541476,
       type: 'expenses',
-      category: 'Продукты',
+      tags: ['Продукты', 'Перекресток'],
       cost: -953,
       account_id: 2,
       account_name: 'Visa',
@@ -40,7 +40,7 @@ export default function App() {
       id: 1695516121476,
       time: 1695516121476,
       type: 'expenses',
-      category: 'Кафе',
+      tags: ['Столовая', 'Перекус'],
       cost: -120,
       account_id: 2,
       account_name: 'Visa',
@@ -108,6 +108,7 @@ export default function App() {
   return (
     <div className="App">
       <TransactionMain
+        transactions={transactions}
         accounts={accounts}
         sortTransactions={sortTransactions}
         sortedTransactions={sortedTransactions}
