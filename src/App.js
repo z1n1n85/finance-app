@@ -13,7 +13,6 @@ export default function App() {
       tags: ['Кафе', 'Перекус'],
       cost: -500,
       account_id: 1,
-      account_name: 'Mastercard',
       description: 'Двойной раф в обеденный перерыв',
     },
     {
@@ -23,7 +22,6 @@ export default function App() {
       tags: ['Зарплата'],
       cost: 3000,
       account_id: 1,
-      account_name: 'Mastercard',
       description: 'Заказ с Habr.Freelance',
     },
     {
@@ -33,7 +31,6 @@ export default function App() {
       tags: ['Продукты', 'Перекресток'],
       cost: -953,
       account_id: 2,
-      account_name: 'Visa',
       description: 'Молок, котлеты, овощи, коробка конфет',
     },
     {
@@ -43,7 +40,6 @@ export default function App() {
       tags: ['Столовая', 'Перекус'],
       cost: -120,
       account_id: 2,
-      account_name: 'Visa',
       description: 'Пирожок в столовой',
     },
   ]);

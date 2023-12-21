@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from './UI/Button/Button';
 
-export default function PostTransaction({
+export default function TransactionItem({
+    accounts,
     transaction,
     removeTransaction,
     setVisibleFormUpdate,
@@ -23,7 +24,9 @@ export default function PostTransaction({
         <span
           className='Tag' key={index}>{tag}</span>
       )}</h4>
-      <p>Счёт: {transaction.account_name}</p>
+      <p>Счёт: {accounts.filter((account) => 
+        account.id === transaction.account_id
+      )[0].name}</p>
       <p>{transaction.description}</p>
       <p>{formatDate(transaction.time)}</p>
       <Button onClick={() => removeTransaction(transaction.id)}>

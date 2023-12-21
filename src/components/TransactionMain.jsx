@@ -63,6 +63,7 @@ export default function TransactionMain({
         setFilterParametrs={setFilterParametrs}
       />
       <TransactionList 
+        accounts={accounts}
         transactions={sortedTransactions}
         removeTransaction={removeTransaction}
         setVisibleFormUpdate={setVisibleFormUpdate}

@@ -19,7 +19,6 @@ export default function TransactionFormCreate({
       tags: [],
       cost: '',
       account_id: '',
-      account_name: '',
       description: '',
     }
   );
@@ -71,9 +70,9 @@ export default function TransactionFormCreate({
       tags: [],
       cost: '',
       account_id: '',
-      account_name: '',
       description: '',
     });
+    setInputTag('');
   }
   return (
     <div >
@@ -136,9 +135,6 @@ export default function TransactionFormCreate({
             setTransaction({
               ...transaction, 
               account_id: Number(e.target.value), 
-              account_name: accounts.filter((account) => {
-                return account.id === Number(e.target.value)
-              })[0].name,
             })
           }}
           basicValue='Выберете счёт операции'
@@ -151,7 +147,7 @@ export default function TransactionFormCreate({
           onChange={e => setTransaction({...transaction, description: e.target.value})}
           placeholder='Описание'
         />
-        {(transaction.cost && transaction.type)
+        {(transaction.cost && transaction.type && transaction.time && transaction.account_id)
           ? <Button type='submit'> Добавить </Button>
           : <Button type='submit' disabled>Добавить</Button>
         }

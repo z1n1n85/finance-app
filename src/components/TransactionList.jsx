@@ -2,6 +2,7 @@ import React from 'react'
 import TransactionItem from './TransactionItem'
 
 export default function TransactionList({
+  accounts,
   transactions,
   removeTransaction,
   setVisibleFormUpdate,
@@ -18,6 +19,7 @@ export default function TransactionList({
     <div className='List'>
       {transactions.map((transaction, index) => 
         <TransactionItem
+          accounts={accounts}
           key={transaction.id}
           transaction={transaction}
           number={index+1}

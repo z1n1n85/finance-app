@@ -56,6 +56,7 @@ export default function TransactionFormUpdate({
     (transaction.type === 'expenses')
       ? updateTransaction({...transaction, cost: transaction.cost * (-1)})
       : updateTransaction(transaction)
+    setInputTag('');
   }
   return (
     <div >
@@ -118,9 +119,6 @@ export default function TransactionFormUpdate({
             setTransaction({
               ...transaction, 
               account_id: Number(e.target.value), 
-              account_name: accounts.filter((account) => {
-                return account.id === Number(e.target.value)
-              })[0].name,
             })
           }}
           basicValue='Выберете счёт операции'
@@ -133,7 +131,7 @@ export default function TransactionFormUpdate({
           onChange={e => setTransaction({...transaction, description: e.target.value})}
           placeholder='Описание'
         />
-        {(transaction.cost && transaction.type)
+        {(transaction.cost && transaction.type && transaction.time && transaction.account_id)
           ? <Button type='submit'> Сохранить </Button>
           : <Button type='submit' disabled> Сохранить</Button>
         }
