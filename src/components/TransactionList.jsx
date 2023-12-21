@@ -1,7 +1,12 @@
 import React from 'react'
 import TransactionItem from './TransactionItem'
 
-export default function TransactionList({transactions, removeTransaction}) {
+export default function TransactionList({
+  transactions,
+  removeTransaction,
+  setVisibleFormUpdate,
+  setTransactionsUpdate,
+}) {
   if (!transactions.length) {
     return (
       <div className='List'>
@@ -17,6 +22,8 @@ export default function TransactionList({transactions, removeTransaction}) {
           transaction={transaction}
           number={index+1}
           removeTransaction={removeTransaction}
+          setVisibleFormUpdate={setVisibleFormUpdate}
+          setTransactionsUpdate={setTransactionsUpdate}
         />
       )}
     </div>

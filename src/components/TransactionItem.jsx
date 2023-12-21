@@ -1,7 +1,12 @@
 import React from 'react';
 import Button from './UI/Button/Button';
 
-export default function PostTransaction({transaction, removeTransaction}) {
+export default function PostTransaction({
+    transaction,
+    removeTransaction,
+    setVisibleFormUpdate,
+    setTransactionsUpdate,
+  }) {
   const formatDate = (date) => {
     const options = {
       year: "numeric",
@@ -23,6 +28,12 @@ export default function PostTransaction({transaction, removeTransaction}) {
       <p>{formatDate(transaction.time)}</p>
       <Button onClick={() => removeTransaction(transaction.id)}>
         Удалить
+      </Button>
+      <Button onClick={() => {
+        setTransactionsUpdate(transaction);
+        setVisibleFormUpdate(true);
+      }}>
+        Редактировать
       </Button>
     </div>
   )
