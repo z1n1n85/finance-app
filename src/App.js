@@ -47,24 +47,34 @@ export default function App() {
       description: 'Пирожок в столовой',
     },
   ]);
-  const addTransaction = (transaction) => {
-    setTransactions(prev => [...prev, transaction]);
-  }
-  const removeTransaction = (id) => {
-    setTransactions(prev => prev.filter((e) => e.id !== id));
-  }
-  const updateTransaction = (transaction) => {
-    removeTransaction(transaction.id);
-    addTransaction(transaction);
-  }
+  const [filterParametrs, setFilterParametrs] = useState({
+    property:{
+      actual: 'time',
+      options: [
+        {value: 'cost', name: 'По сумме'},
+        {value: 'time', name: 'По дате'},
+      ],
+    },
+    direction:{
+      actual: 'decrease',
+      options: [
+        {value: 'increase', name: 'Возрастание'},
+        {value: 'decrease', name: 'Убывание'},
+      ],
+    },
+  });
   const [sortedTransactions, setSortedTransactions] = useState('');
-  const sortTransactions = (parametr, direction) => {
-    setSortedTransactions([...sortedTransactions].sort(
-      (direction === 'increase')
-      ? (a, b) => a[parametr] - b[parametr]
-      : (a, b) => b[parametr] - a[parametr]
-    ))
-  }
+  const sortTransactions = () => {
+    setSortedTransactions([...transactions].sort(
+      (filterParametrs.direction.actual === 'increase')
+      ? (a, b) => a[filterParametrs.property.actual] - b[filterParametrs.property.actual]
+      : (a, b) => b[filterParametrs.property.actual] - a[filterParametrs.property.actual]
+    ));
+  };
+  useEffect(() => {
+    sortTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterParametrs, transactions]);
   // ACCOUNTS
   const [accounts, setAccounts] = useState([
     {
@@ -80,12 +90,6 @@ export default function App() {
       amount: 427,
     }
   ]);
-  const addAccount = (account) => {
-    setAccounts([...accounts, account]);
-  }
-  const removeAccount = (id) => {
-    setAccounts(accounts.filter((e) => e.id !== id));
-  }
   const updateAccountsAmount = () => {
     let accounts_copy = [...accounts];
     accounts.forEach((account, index) => {
@@ -101,7 +105,6 @@ export default function App() {
   }
   // TRANSACTIONS + ACCOUNTS
   useEffect(() => {
-    setSortedTransactions(transactions);
     updateAccountsAmount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactions]);
@@ -109,17 +112,15 @@ export default function App() {
     <div className="App">
       <TransactionMain
         transactions={transactions}
+        setTransactions={setTransactions}
         accounts={accounts}
-        sortTransactions={sortTransactions}
         sortedTransactions={sortedTransactions}
-        removeTransaction={removeTransaction}
-        addTransaction={addTransaction}
-        updateTransaction={updateTransaction}
+        filterParametrs={filterParametrs}
+        setFilterParametrs={setFilterParametrs}
       />
       <AccountMain
         accounts={accounts}
-        addAccount={addAccount}
-        removeAccount={removeAccount}
+        setAccounts={setAccounts}
       />
     </div>
   );

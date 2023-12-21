@@ -8,13 +8,22 @@ import TransactionFilter from './TransactionFilter';
 
 export default function TransactionMain({
   transactions,
+  setTransactions,
   accounts,
-  sortTransactions,
   sortedTransactions,
-  removeTransaction,
-  addTransaction,
-  updateTransaction,
+  filterParametrs,
+  setFilterParametrs,
 }) {
+  const addTransaction = (transaction) => {
+    setTransactions(prev => [...prev, transaction]);
+  }
+  const removeTransaction = (id) => {
+    setTransactions(prev => prev.filter((e) => e.id !== id));
+  }
+  const updateTransaction = (transaction) => {
+    removeTransaction(transaction.id);
+    addTransaction(transaction);
+  }
   const initTags = () => {
     let tags = [];
     transactions.forEach((transaction) => {
@@ -35,7 +44,7 @@ export default function TransactionMain({
   const [visibleFormUpdate, setVisibleFormUpdate] = useState(false);
   const [transactionsUpdate, setTransactionsUpdate] = useState(
     {
-      id: 1,
+      id: 0,
       type: '',
       time: 0,
       tags: [],
@@ -49,7 +58,10 @@ export default function TransactionMain({
       <Button onClick={() => setVisibleFormCreate(true)}>
         Добавить операцию
       </Button>
-      <TransactionFilter sortTransactions={sortTransactions}/>
+      <TransactionFilter 
+        filterParametrs={filterParametrs}
+        setFilterParametrs={setFilterParametrs}
+      />
       <TransactionList 
         transactions={sortedTransactions}
         removeTransaction={removeTransaction}

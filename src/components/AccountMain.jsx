@@ -4,8 +4,14 @@ import Button from './UI/Button/Button'
 import AccountForm from './AccountForm'
 import AccountList from './AccountList';
 
-export default function AccountMain({accounts, addAccount, removeAccount}) {
+export default function AccountMain({accounts, setAccounts}) {
   const [visibleModalAccountForm, setVisibleModalAccountForm] = useState(false);
+  const addAccount = (account) => {
+    setAccounts([...accounts, account]);
+  }
+  const removeAccount = (id) => {
+    setAccounts(accounts.filter((e) => e.id !== id));
+  }
 
   return (
     <div>

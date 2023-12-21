@@ -1,35 +1,36 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Select from './UI/Select/Select'
-import Button from './UI/Button/Button'
 
-export default function TransactionFilter({sortTransactions}) {
-  const [parametr, setParametr] = useState('');
-  const [direction, setDirection] = useState('');
+export default function TransactionFilter({
+  filterParametrs, 
+  setFilterParametrs
+}) {
   return (
     <div>
       <Select
-        value={parametr}
+        value={filterParametrs.property.actual}
         basicValue='Сортировать по'
-        options={[
-          {value: 'cost', name: 'По сумме'},
-          {value: 'time', name: 'По дате'},
-        ]}
-        onChange={e => setParametr(e.target.value)}
+        options={filterParametrs.property.options}
+        onChange={e => setFilterParametrs({
+          ...filterParametrs,
+          property: {
+            ...filterParametrs.property,
+            actual: e.target.value
+          }
+        })}
       />
       <Select
-        value={direction}
+        value={filterParametrs.direction.actual}
         basicValue='Направление'
-        options={[
-          {value: 'increase', name: 'Возрастание'},
-          {value: 'decrease', name: 'Убывание'},
-        ]}
-        onChange={e => setDirection(e.target.value)}
+        options={filterParametrs.direction.options}
+        onChange={e => setFilterParametrs({
+          ...filterParametrs,
+          direction: {
+            ...filterParametrs.direction,
+            actual: e.target.value
+          }
+        })}
       />
-      <Button
-        onClick={() => sortTransactions(parametr, direction)}
-      >
-        Применить фильтры
-      </Button>
     </div>
   )
 }
