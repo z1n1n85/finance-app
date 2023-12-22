@@ -1,5 +1,5 @@
 import React from 'react'
-import TransactionItem from './TransactionItem'
+import TransactionItem from '../transaction-item/transaction-item'
 
 export default function TransactionList({
   accounts,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import Button from './UI/Button/Button'
-import Input from './UI/Input/Input'
+import Button from '../../../../components/UI/Button/Button'
+import Input from '../../../../components/UI/Input/Input'
 
 
 export default function AccountForm({addAccount, setVisible}) {

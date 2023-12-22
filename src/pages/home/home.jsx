@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './styles/App.css'
-import TransactionMain from './components/TransactionMain';
-import AccountMain from './components/AccountMain';
+import '../../styles/index.css'
+import TransactionMain from './components/transaction-main/transaction-main';
+import AccountMain from './components/account-main/account-main';
 
-export default function App() {
+export default function Home() {
   // TRANSATIONS
   const [transactions, setTransactions] = useState([
     {
@@ -11,7 +11,7 @@ export default function App() {
       time: 1697716121476,
       type: 'expenses',
       tags: ['Кафе', 'Перекус'],
-      cost: -500,
+      cost: 500,
       account_id: 1,
       description: 'Двойной раф в обеденный перерыв',
     },
@@ -29,7 +29,7 @@ export default function App() {
       time: 1697716541476,
       type: 'expenses',
       tags: ['Продукты', 'Перекресток'],
-      cost: -953,
+      cost: 953,
       account_id: 2,
       description: 'Молок, котлеты, овощи, коробка конфет',
     },
@@ -38,7 +38,7 @@ export default function App() {
       time: 1695516121476,
       type: 'expenses',
       tags: ['Столовая', 'Перекус'],
-      cost: -120,
+      cost: 120,
       account_id: 2,
       description: 'Пирожок в столовой',
     },
@@ -93,11 +93,23 @@ export default function App() {
       transactions.filter(
         (transaction) => transaction.account_id === account.id
       ).forEach((transaction) => {
-        amount += transaction.cost;
+        (transaction.type === 'expenses')
+        ? amount -= transaction.cost
+        : amount += transaction.cost
       });
       accounts_copy[index].amount = amount;
     });
     setAccounts([...accounts_copy]);
+  }
+  const removeAccount = (id) => {
+    setAccounts(accounts.filter((account) => account.id !== id));
+    setTransactions([...transactions].map((transaction) => {
+      if (transaction.account_id === id){
+        return {...transaction, account_id: ''};
+      } else {
+        return transaction;
+      }
+    }));
   }
   // TRANSACTIONS + ACCOUNTS
   useEffect(() => {
@@ -105,7 +117,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactions]);
   return (
-    <div className="App">
+    <div className="home">
       <TransactionMain
         transactions={transactions}
         setTransactions={setTransactions}
@@ -117,6 +129,7 @@ export default function App() {
       <AccountMain
         accounts={accounts}
         setAccounts={setAccounts}
+        removeAccount={removeAccount}
       />
     </div>
   );

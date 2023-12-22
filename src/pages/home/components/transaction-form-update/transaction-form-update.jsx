@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import Input from './UI/Input/Input'
-import Textarea from './UI/Textarea/Textarea'
-import Button from './UI/Button/Button'
-import Select from './UI/Select/Select'
+import Input from '../../../../components/UI/Input/Input'
+import Textarea from '../../../../components/UI/Textarea/Textarea'
+import Button from '../../../../components/UI/Button/Button'
+import Select from '../../../../components/UI/Select/Select'
 
 
 export default function TransactionFormUpdate({
@@ -53,9 +53,7 @@ export default function TransactionFormUpdate({
   }
   const addUpdateTransaction = (e) => {
     e.preventDefault();
-    (transaction.type === 'expenses')
-      ? updateTransaction({...transaction, cost: transaction.cost * (-1)})
-      : updateTransaction(transaction)
+    updateTransaction(transaction);
     setInputTag('');
   }
   return (

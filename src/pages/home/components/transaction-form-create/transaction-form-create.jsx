@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import Input from './UI/Input/Input'
-import Textarea from './UI/Textarea/Textarea'
-import Button from './UI/Button/Button'
-import Select from './UI/Select/Select'
+import Input from '../../../../components/UI/Input/Input'
+import Textarea from '../../../../components/UI/Textarea/Textarea'
+import Button from '../../../../components/UI/Button/Button'
+import Select from '../../../../components/UI/Select/Select'
 
 
 export default function TransactionFormCreate({
@@ -60,9 +60,7 @@ export default function TransactionFormCreate({
   const createTransaction = (e) => {
     console.log('create transactions')
     e.preventDefault();
-    (transaction.type === 'expenses')
-      ? addTransaction({...transaction, cost: transaction.cost * (-1), id: Date.now()})
-      : addTransaction({...transaction, id: Date.now()})
+    addTransaction({...transaction, id: Date.now()});
     setTransaction({
       id: 0,
       type: '',

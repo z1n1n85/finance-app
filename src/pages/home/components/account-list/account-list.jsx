@@ -1,5 +1,5 @@
 import React from 'react'
-import AccountItem from './AccountItem'
+import AccountItem from '../account-item/account-item'
 
 export default function AccountList({accounts, removeAccount}) {
   if (!accounts.length) {
