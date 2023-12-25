@@ -4,7 +4,7 @@ import Button from '../../../../components/UI/Button/Button';
 export default function TransactionItem({
     accounts,
     transaction,
-    removeTransaction,
+    fetchTransactionsDelete,
     setVisibleFormUpdate,
     setTransactionsUpdate,
   }) {
@@ -18,10 +18,14 @@ export default function TransactionItem({
   }
   
   const getAccountName = () =>{
-    const account = accounts.filter((account) => 
-      account.id === transaction.account_id
-    )[0];
-    return (account) ? account.name : 'Отсутствует';
+    if (accounts){
+      const account = accounts.filter((account) => 
+        account._id === transaction.accountId
+      )[0];
+      return (account) ? account.name : 'Отсутствует';
+    } else {
+      return 'Отсутствует';
+    }
   }
 
   return(
@@ -36,7 +40,7 @@ export default function TransactionItem({
       <p>Счёт: {getAccountName()}</p>
       <p>{transaction.description}</p>
       <p>{formatDate(transaction.time)}</p>
-      <Button onClick={() => removeTransaction(transaction.id)}>
+      <Button onClick={() => fetchTransactionsDelete(transaction._id)}>
         Удалить
       </Button>
       <Button onClick={() => {

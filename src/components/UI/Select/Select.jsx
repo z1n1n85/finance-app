@@ -5,9 +5,13 @@ export default function Select({options, basicValue, ...props}) {
   return (
     <select className={css.select} {...props}>
       {(basicValue) ? <option value='' disabled>{basicValue}</option> : ''}
-      {options.map(option => 
-        <option value={option.value}>{option.name}</option>
-      )}
+      {(options)
+        ?
+        options.map(option => 
+          <option value={option.value}>{option.name}</option>
+        )
+        : ''
+      }
     </select>
   )
 }

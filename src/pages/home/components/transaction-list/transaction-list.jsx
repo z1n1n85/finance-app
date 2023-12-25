@@ -4,11 +4,11 @@ import TransactionItem from '../transaction-item/transaction-item'
 export default function TransactionList({
   accounts,
   transactions,
-  removeTransaction,
+  fetchTransactionsDelete,
   setVisibleFormUpdate,
   setTransactionsUpdate,
 }) {
-  if (!transactions.length) {
+  if (!transactions) {
     return (
       <div className='List'>
         <h1 className='Header'>Операций нет</h1>
@@ -17,13 +17,12 @@ export default function TransactionList({
   }
   return (
     <div className='List'>
-      {transactions.map((transaction, index) => 
+      {transactions.map((transaction) => 
         <TransactionItem
           accounts={accounts}
-          key={transaction.id}
+          key={transaction._id}
           transaction={transaction}
-          number={index+1}
-          removeTransaction={removeTransaction}
+          fetchTransactionsDelete={fetchTransactionsDelete}
           setVisibleFormUpdate={setVisibleFormUpdate}
           setTransactionsUpdate={setTransactionsUpdate}
         />

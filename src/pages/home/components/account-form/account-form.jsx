@@ -3,21 +3,19 @@ import Button from '../../../../components/UI/Button/Button'
 import Input from '../../../../components/UI/Input/Input'
 
 
-export default function AccountForm({addAccount, setVisible}) {
+export default function AccountForm({fetchAccountsCreate, setVisible}) {
   const [account, setAccount] = useState({
-    id: 0,
     name: '',
     amount: 0,
-    amount_start: 0,
+    amountStart: 0,
   });
   const createAccount = (e) => {
     e.preventDefault();
-    addAccount({...account, id: Date.now()});
+    fetchAccountsCreate(account);
     setAccount({
-      id: 0,
       name: '',
       amount: 0,
-      amount_start: 0,
+      amountStart: 0,
     });
   }
 
@@ -39,7 +37,7 @@ export default function AccountForm({addAccount, setVisible}) {
             return setAccount({
               ...account,
               amount: Number(e.target.value),
-              amount_start: Number(e.target.value),
+              amountStart: Number(e.target.value),
             })
           }}
           min='0'

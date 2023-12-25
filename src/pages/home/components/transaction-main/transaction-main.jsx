@@ -13,43 +13,31 @@ export default function TransactionMain({
   sortedTransactions,
   filterParametrs,
   setFilterParametrs,
+  fetchTransactionsCreate,
+  fetchTransactionsUpdate,
+  fetchTransactionsDelete,
+  tags,
 }) {
-  const addTransaction = (transaction) => {
-    setTransactions(prev => [...prev, transaction]);
-  }
-  const removeTransaction = (id) => {
-    setTransactions(prev => prev.filter((e) => e.id !== id));
-  }
-  const updateTransaction = (transaction) => {
-    removeTransaction(transaction.id);
-    addTransaction(transaction);
-  }
-  const initTags = () => {
-    let tags = [];
-    transactions.forEach((transaction) => {
-      transaction.tags.forEach((tag) => {
-        (tags.filter((e) => e[0] === tag).length)
-        ? tags.filter((e) => e[0] === tag)[0][1] += 1
-        : tags.push([tag, 1])
-      })
-    });
-    return tags;
-  } 
-  const [tags, setTags] = useState(initTags);
-  useEffect(() => {
-    setTags(initTags());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactions]);
+  // const addTransaction = (transaction) => {
+  //   setTransactions(prev => [...prev, transaction]);
+  // }
+  // const removeTransaction = (_id) => {
+  //   setTransactions(prev => prev.filter((e) => e._id !== _id));
+  // }
+  // const updateTransaction = (transaction) => {
+  //   removeTransaction(transaction._id);
+  //   addTransaction(transaction);
+  // }
   const [visibleFormCreate, setVisibleFormCreate] = useState(false);
   const [visibleFormUpdate, setVisibleFormUpdate] = useState(false);
   const [transactionsUpdate, setTransactionsUpdate] = useState(
     {
-      id: 0,
+      _id: 0,
       type: '',
       time: 0,
       tags: [],
       cost: '',
-      account_id: '',
+      accountId: '',
       account_name: '',
       description: '',
     });
@@ -65,14 +53,14 @@ export default function TransactionMain({
       <TransactionList 
         accounts={accounts}
         transactions={sortedTransactions}
-        removeTransaction={removeTransaction}
+        fetchTransactionsDelete={fetchTransactionsDelete}
         setVisibleFormUpdate={setVisibleFormUpdate}
         setTransactionsUpdate={setTransactionsUpdate}
       />
       <Modal visible={visibleFormCreate} setVisible={setVisibleFormCreate}>
         <TransactionFormCreate 
           accounts={accounts}
-          addTransaction={addTransaction}
+          fetchTransactionsCreate={fetchTransactionsCreate}
           tags={tags} 
           setVisible={setVisibleFormCreate}
         />
@@ -81,7 +69,7 @@ export default function TransactionMain({
         <TransactionFormUpdate
           transactionsUpdate={transactionsUpdate}
           accounts={accounts}
-          updateTransaction={updateTransaction}
+          fetchTransactionsUpdate={fetchTransactionsUpdate}
           tags={tags} 
           setVisible={setVisibleFormUpdate}
         />

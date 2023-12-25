@@ -8,7 +8,7 @@ import Select from '../../../../components/UI/Select/Select'
 export default function TransactionFormUpdate({
   transactionsUpdate,
   accounts, 
-  updateTransaction,
+  fetchTransactionsUpdate,
   tags,
   setVisible
 }) {
@@ -29,8 +29,10 @@ export default function TransactionFormUpdate({
   }
   const initRankedTags = () => {
     let rankedTags = [];
-    tags.sort((a, b) => a[1] - b[1]);
-    rankedTags = tags.map((e) => e[0])
+    if (tags){
+      tags.sort((a, b) => a[1] - b[1]);
+      rankedTags = tags.map((e) => e[0])
+    }
     return rankedTags;
   }
   const [rankedTags, setRankedTags] = useState(initRankedTags);
@@ -53,7 +55,7 @@ export default function TransactionFormUpdate({
   }
   const addUpdateTransaction = (e) => {
     e.preventDefault();
-    updateTransaction(transaction);
+    fetchTransactionsUpdate(transaction);
     setInputTag('');
   }
   return (
@@ -111,25 +113,34 @@ export default function TransactionFormUpdate({
             <Button onClick={(e) => removeTag(e, tag)}>Удалить тег</Button>
           </span>
         )}
-        <Select
-          value={transaction.account_id.toString()}
-          onChange={(e) => {
-            setTransaction({
-              ...transaction, 
-              account_id: Number(e.target.value), 
-            })
-          }}
-          basicValue='Выберете счёт операции'
-          options={accounts.map((account) => {
-            return {value: account.id, name: account.name}
-          })}
-        />
+        {(accounts)
+          ?
+          <Select
+            value={transaction.accountId.toString()}
+            onChange={(e) => {
+              setTransaction({
+                ...transaction, 
+                accountId: e.target.value, 
+              })
+            }}
+            basicValue='Выберете счёт операции'
+            options={accounts.map((account) => {
+              return {value: account._id, name: account.name}
+            })}
+          />
+          :
+          <Select
+            disabled
+            value=''
+            basicValue='Нет доступных счетов'
+          />
+        }
         <Textarea
           value={transaction.description}
           onChange={e => setTransaction({...transaction, description: e.target.value})}
           placeholder='Описание'
         />
-        {(transaction.cost && transaction.type && transaction.time && transaction.account_id)
+        {(transaction.cost && transaction.type && transaction.time && transaction.accountId)
           ? <Button type='submit'> Сохранить </Button>
           : <Button type='submit' disabled> Сохранить</Button>
         }
