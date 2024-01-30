@@ -1,20 +1,16 @@
-import axios from "axios";
+import $api from "./index";
 
 export default class AccountService {
   static async getAll() {
-    const response = await axios.get('http://localhost:5000/api/accounts');
-    return response;
+    return $api.get(`accounts`);
   }
   static async create(account) {
-    const response = await axios.post('http://localhost:5000/api/accounts', account);
-    return response;
+    return $api.post(`accounts`, account);
   }
   static async update(account) {
-    const response = await axios.put('http://localhost:5000/api/accounts', account);
-    return response;
+    return $api.put(`accounts`, account);
   }
   static async delete(id) {
-    const response = await axios.delete(`http://localhost:5000/api/accounts${id}`);
-    return response;
+    return $api.delete(`accounts${id}`);
   }
 }

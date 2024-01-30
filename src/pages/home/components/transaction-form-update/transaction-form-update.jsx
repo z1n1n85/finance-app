@@ -1,22 +1,28 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Input from '../../../../components/UI/Input/Input'
 import Textarea from '../../../../components/UI/Textarea/Textarea'
 import Button from '../../../../components/UI/Button/Button'
 import Select from '../../../../components/UI/Select/Select'
+import { formatDateForInput } from '../../../../utils/date'
+import { UserDataContext } from '../../../../context/user-data/user-data'
 
 
 export default function TransactionFormUpdate({
   transactionsUpdate,
-  accounts, 
-  fetchTransactionsUpdate,
-  tags,
   setVisible
 }) {
+  const {accounts, fetchTransactionsUpdate, tags} = useContext(UserDataContext);
+
   const [transaction, setTransaction] = useState(transactionsUpdate);
+  const addUpdateTransaction = (e) => {
+    e.preventDefault();
+    fetchTransactionsUpdate(transaction);
+    setInputTag('');
+  }
+
   const [inputTag, setInputTag] = useState('');
   const addTag = (e) => {
     e.preventDefault();
-    // TODO всплывающее сообщение о дублировании тегов
     setTransaction(prev => {
       return {...prev, tags: [...prev.tags, inputTag] }
     })
@@ -36,28 +42,14 @@ export default function TransactionFormUpdate({
     return rankedTags;
   }
   const [rankedTags, setRankedTags] = useState(initRankedTags);
+
   useEffect(() => {
-    setTransaction({...transactionsUpdate, cost: Math.abs(transactionsUpdate.cost)})
+    setTransaction(transactionsUpdate);
   }, [transactionsUpdate]);
   useEffect(() => {
     setRankedTags(initRankedTags());
   }, [tags]);
-  const formatDate = (date) => {
-    let d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    let year = d.getFullYear();
-    if (month.length < 2) 
-      month = '0' + month;
-    if (day.length < 2) 
-      day = '0' + day;
-    return [year, month, day].join('-');
-  }
-  const addUpdateTransaction = (e) => {
-    e.preventDefault();
-    fetchTransactionsUpdate(transaction);
-    setInputTag('');
-  }
+  
   return (
     <div >
       <h1>
@@ -77,7 +69,7 @@ export default function TransactionFormUpdate({
           ]}
         />
         <Input
-          value={formatDate(transaction.time)}
+          value={formatDateForInput(transaction.time)}
           onChange={e => setTransaction({...transaction, time: e.target.valueAsNumber})}
           type='date'
           style={{width: '50%'}}

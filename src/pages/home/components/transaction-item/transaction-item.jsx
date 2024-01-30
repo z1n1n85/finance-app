@@ -1,21 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../../../../components/UI/Button/Button';
+import { UserDataContext } from '../../../../context/user-data/user-data';
+import { formatDateMonth } from '../../../../utils/date';
 
 export default function TransactionItem({
-    accounts,
-    transaction,
-    fetchTransactionsDelete,
-    setVisibleFormUpdate,
-    setTransactionsUpdate,
-  }) {
-  const formatDate = (date) => {
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-    return Intl.DateTimeFormat('ru', options).format(date);
-  }
+  transaction,
+  setVisibleFormUpdate,
+  setTransactionsUpdate,
+}) {
+  const {accounts, fetchTransactionsDelete} = useContext(UserDataContext);
   
   const getAccountName = () =>{
     if (accounts){
@@ -39,7 +32,7 @@ export default function TransactionItem({
       )}</h4>
       <p>Счёт: {getAccountName()}</p>
       <p>{transaction.description}</p>
-      <p>{formatDate(transaction.time)}</p>
+      <p>{formatDateMonth(transaction.time)}</p>
       <Button onClick={() => fetchTransactionsDelete(transaction._id)}>
         Удалить
       </Button>

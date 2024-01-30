@@ -24,6 +24,18 @@ html {
   overflow: hidden;
   gap: 20px;
 }
+.page{
+  margin-top: 50px;
+}
+.auth{
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+}
 .Item{
   margin-top: 10px;
   width: 100%;

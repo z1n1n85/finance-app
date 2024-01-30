@@ -1,14 +1,15 @@
 import React from 'react'
 import TransactionItem from '../transaction-item/transaction-item'
+import { useContext } from 'react'
+import { UserDataContext } from '../../../../context/user-data/user-data'
 
 export default function TransactionList({
-  accounts,
-  transactions,
-  fetchTransactionsDelete,
   setVisibleFormUpdate,
   setTransactionsUpdate,
 }) {
-  if (!transactions) {
+  const {sortedTransactions} = useContext(UserDataContext);
+
+  if (!sortedTransactions || sortedTransactions.length === 0) {
     return (
       <div className='List'>
         <h1 className='Header'>Операций нет</h1>
@@ -17,12 +18,10 @@ export default function TransactionList({
   }
   return (
     <div className='List'>
-      {transactions.map((transaction) => 
+      {sortedTransactions.map((transaction) => 
         <TransactionItem
-          accounts={accounts}
           key={transaction._id}
           transaction={transaction}
-          fetchTransactionsDelete={fetchTransactionsDelete}
           setVisibleFormUpdate={setVisibleFormUpdate}
           setTransactionsUpdate={setTransactionsUpdate}
         />

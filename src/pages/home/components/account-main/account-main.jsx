@@ -4,13 +4,7 @@ import Button from '../../../../components/UI/Button/Button'
 import AccountForm from '../account-form/account-form'
 import AccountList from '../account-list/account-list';
 
-export default function AccountMain({
-    accounts,
-    setAccounts,
-    removeAccount,
-    fetchAccountsCreate,
-    fetchAccountsDelete,
-  }) {
+export default function AccountMain() {
   const [visibleModalAccountForm, setVisibleModalAccountForm] = useState(false);
 
   return (
@@ -18,14 +12,9 @@ export default function AccountMain({
       <Button onClick={() => setVisibleModalAccountForm(true)}>
         Добавить счёт
       </Button>
-      <AccountList
-        accounts={accounts}
-        fetchAccountsDelete={fetchAccountsDelete}
-      />
+      <AccountList/>
       <Modal visible={visibleModalAccountForm} setVisible={setVisibleModalAccountForm}>
         <AccountForm
-          accounts={accounts}
-          fetchAccountsCreate={fetchAccountsCreate}
           setVisible={setVisibleModalAccountForm}
         />
       </Modal>

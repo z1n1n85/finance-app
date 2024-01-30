@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import Button from '../../../../components/UI/Button/Button'
 import Input from '../../../../components/UI/Input/Input'
+import { UserDataContext } from '../../../../context/user-data/user-data';
 
 
-export default function AccountForm({fetchAccountsCreate, setVisible}) {
+export default function AccountForm({setVisible}) {
+  const {fetchAccountsCreate} = useContext(UserDataContext);
+
   const [account, setAccount] = useState({
     name: '',
     amount: 0,

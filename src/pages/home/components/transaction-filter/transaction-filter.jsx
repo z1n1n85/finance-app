@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Select from '../../../../components/UI/Select/Select'
+import { UserDataContext } from '../../../../context/user-data/user-data'
 
-export default function TransactionFilter({
-  filterParametrs, 
-  setFilterParametrs
-}) {
+export default function TransactionFilter() {
+  const {filterParametrs, setFilterParametrs} = useContext(UserDataContext);
+
   return (
-    <div>
+    <>
       <Select
         value={filterParametrs.property.actual}
         basicValue='Сортировать по'
@@ -31,6 +31,6 @@ export default function TransactionFilter({
           }
         })}
       />
-    </div>
+    </>
   )
 }

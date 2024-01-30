@@ -1,19 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Input from '../../../../components/UI/Input/Input'
 import Textarea from '../../../../components/UI/Textarea/Textarea'
 import Button from '../../../../components/UI/Button/Button'
 import Select from '../../../../components/UI/Select/Select'
+import { UserDataContext } from '../../../../context/user-data/user-data'
+import { formatDateForInput } from '../../../../utils/date'
 
 
-export default function TransactionFormCreate({
-  accounts, 
-  fetchTransactionsCreate,
-  tags,
-  setVisible
-}) {
+export default function TransactionFormCreate({ setVisible }) {
+    const {accounts, fetchTransactionsCreate, tags} = useContext(UserDataContext);
+
     const [transaction, setTransaction] = useState(
     {
-      _id: 0,
       type: '',
       time: Date.now(),
       tags: [],
@@ -22,10 +20,23 @@ export default function TransactionFormCreate({
       description: '',
     }
   );
+  const createTransaction = (e) => {
+    e.preventDefault();
+    fetchTransactionsCreate(transaction);
+    setTransaction({
+      type: '',
+      time: Date.now(),
+      tags: [],
+      cost: '',
+      accountId: '',
+      description: '',
+    });
+    setInputTag('');
+  }
+
   const [inputTag, setInputTag] = useState('');
   const addTag = (e) => {
     e.preventDefault();
-    // TODO всплывающее сообщение о дублировании тегов
     setTransaction(prev => {
       return {...prev, tags: [...prev.tags, inputTag] }
     })
@@ -45,35 +56,11 @@ export default function TransactionFormCreate({
     return rankedTags;
   }
   const [rankedTags, setRankedTags] = useState(initRankedTags);
+
   useEffect(() => {
     setRankedTags(initRankedTags());
   }, [tags]);
-  const formatDate = (date) => {
-    let d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    let year = d.getFullYear();
-    if (month.length < 2) 
-      month = '0' + month;
-    if (day.length < 2) 
-      day = '0' + day;
-    return [year, month, day].join('-');
-  }
-  const createTransaction = (e) => {
-    console.log('create transactions')
-    e.preventDefault();
-    fetchTransactionsCreate(transaction);
-    setTransaction({
-      _id: 0,
-      type: '',
-      time: Date.now(),
-      tags: [],
-      cost: '',
-      accountId: '',
-      description: '',
-    });
-    setInputTag('');
-  }
+
   return (
     <div >
       <h1>
@@ -93,7 +80,7 @@ export default function TransactionFormCreate({
           ]}
         />
         <Input
-          value={formatDate(transaction.time)}
+          value={formatDateForInput(transaction.time)}
           onChange={e => setTransaction({...transaction, time: e.target.valueAsNumber})}
           type='date'
           style={{width: '50%'}}

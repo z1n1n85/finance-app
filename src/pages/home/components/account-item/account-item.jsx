@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../../../../components/UI/Button/Button'
+import { UserDataContext } from '../../../../context/user-data/user-data'
 
-export default function AccountItem({account, fetchAccountsDelete}) {
+export default function AccountItem({account}) {
+  const {fetchAccountsDelete} = useContext(UserDataContext);
+
   return (
     <div className='Item'>
       <h2>{account.amount}</h2>
