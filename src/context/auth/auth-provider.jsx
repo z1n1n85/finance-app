@@ -7,6 +7,7 @@ import { SERVER_API } from '../../const/access';
 export default function AuthProvider({children}) {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
+  const [error, setError] = useState('');
 
   const updateAuth = (updateIsAuth) => {
     localStorage.setItem('isAuth', `${updateIsAuth}`);
@@ -19,8 +20,10 @@ export default function AuthProvider({children}) {
       localStorage.setItem('token', response.data.accessToken);
       updateAuth(true);
       setUser(response.data.user);
+      setError('');
     } catch (e) {
-      console.log(e.response.message);
+      console.log(e.response.data.message, e.response.data.errors);
+      setError(e.response.data.message);
     }
   }
 
@@ -30,8 +33,10 @@ export default function AuthProvider({children}) {
       localStorage.setItem('token', response.data.accessToken);
       updateAuth(true);
       setUser(response.data.user);
+      setError('');
     } catch (e) {
-      console.log(e.response.message);
+      console.log(e.response.data.message, e.response.data.errors);
+      setError(e.response.data.message);
     }
   }
 
@@ -42,7 +47,7 @@ export default function AuthProvider({children}) {
       updateAuth(false);
       setUser({});
     } catch (e) {
-      console.log(e.response.message);
+      console.log(e.response.data.message, e.response.data.errors);
     }
   }
 
@@ -53,7 +58,6 @@ export default function AuthProvider({children}) {
       updateAuth(true);
       setUser(response.data.user);
     } catch (e) {
-      
     }
   }
 
@@ -65,9 +69,10 @@ export default function AuthProvider({children}) {
 
   return (
     <AuthContext.Provider value={{
+      error,
+      setError,
       isAuth,
       user,
-      setIsAuth,
       updateAuth,
       login,
       registration,
