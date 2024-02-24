@@ -1,46 +1,31 @@
-import React, {useEffect, useState } from 'react';
+import React from 'react';
 import TransactionList from '../transaction-list/transaction-list';
-import TransactionFormCreate from '../transaction-form-create/transaction-form-create';
-import TransactionFormUpdate from '../transaction-form-update/transaction-form-update';
-import Modal from '../../../../components/UI/Modal/Modal'
-import Button from '../../../../components/UI/Button/Button'
-import TransactionFilter from '../transaction-filter/transaction-filter';
+import { Button } from 'components/UI/button'
+import {
+  Card,
+  CardContent,
+} from "components/UI/card"
+import { Separator } from 'components/UI/separator';
+import TransactionFilter from 'pages/home/components/transaction-filter/transaction-filter';
+import ModalTransactionCreate from 'pages/home/components/modal-transaction-create/modal-transaction-create';
 
 export default function TransactionMain() {
-  const [visibleFormCreate, setVisibleFormCreate] = useState(false);
-  const [visibleFormUpdate, setVisibleFormUpdate] = useState(false);
-  const [transactionsUpdate, setTransactionsUpdate] = useState(
-    {
-      _id: 0,
-      type: '',
-      time: 0,
-      tags: [],
-      cost: '',
-      accountId: '',
-      account_name: '',
-      description: '',
-    });
   return (
-    <div>
-      <Button onClick={() => setVisibleFormCreate(true)}>
-        Добавить операцию
-      </Button>
-      <TransactionFilter/>
-      <TransactionList
-        setTransactionsUpdate={setTransactionsUpdate}
-        setVisibleFormUpdate={setVisibleFormUpdate}
-      />
-      <Modal visible={visibleFormCreate} setVisible={setVisibleFormCreate}>
-        <TransactionFormCreate 
-          setVisible={setVisibleFormCreate}
-        />
-      </Modal>
-      <Modal visible={visibleFormUpdate} setVisible={setVisibleFormUpdate}>
-        <TransactionFormUpdate
-          transactionsUpdate={transactionsUpdate}
-          setVisible={setVisibleFormUpdate}
-        />
-      </Modal>
-    </div>
+    <>
+      <Card>
+        <CardContent className="pt-6">
+          <ModalTransactionCreate
+            triggerElement={
+              <Button className='block mb-2'>
+                Добавить операцию
+              </Button>
+            }
+          />
+          <Separator className='my-4' />
+          <TransactionFilter />
+          <TransactionList />
+        </CardContent>
+      </Card>
+    </>
   )
 }

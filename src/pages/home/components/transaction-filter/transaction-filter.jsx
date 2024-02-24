@@ -1,36 +1,36 @@
 import React, { useContext } from 'react'
-import Select from '../../../../components/UI/Select/Select'
-import { UserDataContext } from '../../../../context/user-data/user-data'
+import {Select} from 'components/UI/select'
+import { UserDataContext } from 'context/user-data/user-data'
 
 export default function TransactionFilter() {
   const {filterParametrs, setFilterParametrs} = useContext(UserDataContext);
 
   return (
-    <>
+    <div className='grid gap-2 ld:grid-cols-2'>
       <Select
-        value={filterParametrs.property.actual}
-        basicValue='Сортировать по'
+        startValue={filterParametrs.property.actual}
+        placeholder='Сортировать по...'
         options={filterParametrs.property.options}
-        onChange={e => setFilterParametrs({
+        onChange={value => setFilterParametrs({
           ...filterParametrs,
           property: {
             ...filterParametrs.property,
-            actual: e.target.value
+            actual: value
           }
         })}
       />
       <Select
-        value={filterParametrs.direction.actual}
-        basicValue='Направление'
+        startValue={filterParametrs.direction.actual}
+        placeholder='В направлении...'
         options={filterParametrs.direction.options}
-        onChange={e => setFilterParametrs({
+        onChange={value => setFilterParametrs({
           ...filterParametrs,
           direction: {
             ...filterParametrs.direction,
-            actual: e.target.value
+            actual: value
           }
         })}
       />
-    </>
+    </div>
   )
 }

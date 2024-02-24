@@ -1,23 +1,27 @@
-import React, {useState} from 'react'
-import Modal from '../../../../components/UI/Modal/Modal'
-import Button from '../../../../components/UI/Button/Button'
-import AccountForm from '../account-form/account-form'
+import React from 'react'
 import AccountList from '../account-list/account-list';
+import { Button } from 'components/UI/button'
+import {
+  Card,
+  CardContent,
+} from "components/UI/card"
+import { Separator } from 'components/UI/separator';
+import ModalAccountCreate from 'pages/home/components/modal-account-create/modal-account-create';
 
 export default function AccountMain() {
-  const [visibleModalAccountForm, setVisibleModalAccountForm] = useState(false);
-
   return (
-    <div>
-      <Button onClick={() => setVisibleModalAccountForm(true)}>
-        Добавить счёт
-      </Button>
-      <AccountList/>
-      <Modal visible={visibleModalAccountForm} setVisible={setVisibleModalAccountForm}>
-        <AccountForm
-          setVisible={setVisibleModalAccountForm}
+    <Card>
+      <CardContent className="pt-6">
+        <ModalAccountCreate
+          triggerElement={
+            <Button>
+              Добавить счёт
+            </Button>
+          }
         />
-      </Modal>
-    </div>
+        <Separator className='my-4' />
+        <AccountList />
+      </CardContent>
+    </Card>
   )
 }

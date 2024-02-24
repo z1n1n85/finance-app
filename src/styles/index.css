@@ -1,62 +1,70 @@
-* {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+  }
 }
-body,
-html {
-  display: block;
-  height: 100%;
-  overflow-x: hidden !important;
-  width: 100%;
-  height: 100%;
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
-#root{
-  margin: 0 auto;
-  max-width: 1920px;
+
+[data-color-scheme="dark"] {
+  color-scheme: dark;
 }
-.home{
-  padding: 20px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  overflow: hidden;
-  gap: 20px;
-}
-.page{
-  margin-top: 50px;
-}
-.auth{
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: auto;
-  margin-left: auto;
-}
-.Item{
-  margin-top: 10px;
-  width: 100%;
-  border: solid black;
-  border-width: 2px;
-  padding: 10px;
-  border-radius: 15px;
-}
-.Tag{
-  background-color: lightgray;
-  margin-right: 5px;
-}
-.List{
-  width: 100%;
-}
-.Header{
-  margin: 30px 0;
-  text-align: center;
-}
-.Form{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+
+[data-color-scheme="light"] {
+  color-scheme: light;
 }

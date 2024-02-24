@@ -1,25 +1,23 @@
 import React, { useContext } from 'react'
 import AccountItem from '../account-item/account-item'
-import { UserDataContext } from '../../../../context/user-data/user-data'
+import { UserDataContext } from 'context/user-data/user-data'
 
 export default function AccountList() {
-  const {accounts, fetchAccountsDelete} = useContext(UserDataContext);
-  
+  const { accounts, fetchAccountsDelete } = useContext(UserDataContext);
+
   if (!accounts || accounts.length === 0) {
     return (
-      <div className='List'>
-        <h1 className='Header'>Счетов нет</h1>
-      </div>
+      <p className='text-4xl text-center mt-8 mb-8'>Счетов нет</p>
     )
   }
   return (
-    <div className='List'>
-      {accounts.map((account) => 
+    <>
+      {accounts.map((account) =>
         <AccountItem
           key={account._id}
           account={account}
         />
       )}
-    </div>
+    </>
   )
 }

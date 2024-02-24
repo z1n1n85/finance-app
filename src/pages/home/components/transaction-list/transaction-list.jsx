@@ -1,31 +1,27 @@
-import React from 'react'
-import TransactionItem from '../transaction-item/transaction-item'
-import { useContext } from 'react'
-import { UserDataContext } from '../../../../context/user-data/user-data'
+import React, { useContext } from 'react'
+import TransactionItem from 'pages/home/components/transaction-item/transaction-item'
+import { UserDataContext } from 'context/user-data/user-data'
+import { Separator } from "components/UI/separator"
 
-export default function TransactionList({
-  setVisibleFormUpdate,
-  setTransactionsUpdate,
-}) {
+export default function TransactionList() {
   const {sortedTransactions} = useContext(UserDataContext);
 
   if (!sortedTransactions || sortedTransactions.length === 0) {
     return (
-      <div className='List'>
-        <h1 className='Header'>Операций нет</h1>
-      </div>
+      <p className='text-4xl text-center mt-8 mb-8'>Операций нет</p>
     )
   }
   return (
-    <div className='List'>
+    <>
       {sortedTransactions.map((transaction) => 
-        <TransactionItem
-          key={transaction._id}
-          transaction={transaction}
-          setVisibleFormUpdate={setVisibleFormUpdate}
-          setTransactionsUpdate={setTransactionsUpdate}
-        />
+        <>
+          <Separator className="my-4" />
+          <TransactionItem
+            key={transaction._id}
+            transaction={transaction}
+          />
+        </>
       )}
-    </div>
+    </>
   )
 }

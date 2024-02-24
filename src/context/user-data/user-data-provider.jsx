@@ -17,6 +17,15 @@ export default function UserDataProvider({children}) {
     addTransaction(transaction);
   }
 
+  const [sortedTransactions, setSortedTransactions] = useState('');
+  const sortTransactions = () => {
+    setSortedTransactions([...transactions].sort(
+      (filterParametrs.direction.actual === 'increase')
+      ? (a, b) => a[filterParametrs.property.actual] - b[filterParametrs.property.actual]
+      : (a, b) => b[filterParametrs.property.actual] - a[filterParametrs.property.actual]
+    ));
+  };
+
   const [fetchTransactionsGetAll]
   = useFetching(async () => {
     const response = await TransactionService.getAll();
@@ -40,28 +49,20 @@ export default function UserDataProvider({children}) {
 
   const [filterParametrs, setFilterParametrs] = useState({
     property:{
-      actual: 'time',
+      actual: '',
       options: [
-        {value: 'cost', name: 'По сумме'},
-        {value: 'time', name: 'По дате'},
+        {value: 'cost', label: 'По сумме'},
+        {value: 'time', label: 'По дате'},
       ],
     },
     direction:{
-      actual: 'decrease',
+      actual: '',
       options: [
-        {value: 'increase', name: 'Возрастание'},
-        {value: 'decrease', name: 'Убывание'},
+        {value: 'increase', label: 'Возрастание'},
+        {value: 'decrease', label: 'Убывание'},
       ],
     },
   });
-  const [sortedTransactions, setSortedTransactions] = useState('');
-  const sortTransactions = () => {
-    setSortedTransactions([...transactions].sort(
-      (filterParametrs.direction.actual === 'increase')
-      ? (a, b) => a[filterParametrs.property.actual] - b[filterParametrs.property.actual]
-      : (a, b) => b[filterParametrs.property.actual] - a[filterParametrs.property.actual]
-    ));
-  };
 
   const initTags = () => {
     let tags = [];
@@ -141,7 +142,11 @@ export default function UserDataProvider({children}) {
   }, [transactions]);
   useEffect(() => {
     if (transactions) {
-      sortTransactions();
+      if (filterParametrs.direction.actual && filterParametrs.property.actual){
+        sortTransactions();
+      } else {
+        setSortedTransactions(transactions);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterParametrs, transactions]);
