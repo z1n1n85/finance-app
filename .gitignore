@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /src/const/access.js
+.env
 
 # testing
 /coverage

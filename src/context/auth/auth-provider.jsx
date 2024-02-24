@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { AuthContext } from './auth';
 import AuthService from '../../api/auth';
 import axios from 'axios';
-import { SERVER_API } from '../../const/access';
 
 export default function AuthProvider({children}) {
   const [isAuth, setIsAuth] = useState(false);
@@ -53,7 +52,7 @@ export default function AuthProvider({children}) {
 
   async function checkAuth() {
     try {
-      const response = await axios.get(`${SERVER_API}refresh`, {withCredentials: true});
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_API}refresh`, {withCredentials: true});
       localStorage.setItem('token', response.data.accessToken);
       updateAuth(true);
       setUser(response.data.user);

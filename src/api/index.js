@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { SERVER_API } from '../const/access';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: SERVER_API,
+  baseURL: process.env.REACT_APP_SERVER_API,
 });
 
 $api.interceptors.request.use((config) => {
@@ -18,7 +17,7 @@ $api.interceptors.response.use((config) => {
   if (error.response.status == 401 && error.config && !error.config._isRetry) {
     originalReq._isRetry = true;
     try {
-      const response = await axios.get(`${SERVER_API}refresh`, {withCredentials: true});
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_API}refresh`, {withCredentials: true});
       localStorage.setItem('token', response.data.accessToken);
       return $api.request(originalReq);
     } catch (e) {
