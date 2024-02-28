@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <Page>
       <UserDataProvider>
-        <div className='grid sm:grid-cols-2 gap-4 w-full md:w-3/4'>
-          <TransactionMain/>
+        <div className='grid sm:grid-cols-2 gap-4 w-full md:w-3/4 items-start'>
           <AccountMain/>
+          <TransactionMain/>
         </div>
       </UserDataProvider>
     </Page>
