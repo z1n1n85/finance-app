@@ -5,13 +5,12 @@ import {
   Card,
   CardContent,
 } from "components/UI/card"
-import { Separator } from 'components/UI/separator';
 import ModalAccountCreate from 'pages/home/components/modal-account-create/modal-account-create';
 
 export default function AccountMain() {
   return (
     <Card>
-      <CardContent className="pt-6">
+      <CardContent className="pt-6 flex flex-col h-full items-start">
         <ModalAccountCreate
           triggerElement={
             <Button>
@@ -19,7 +18,6 @@ export default function AccountMain() {
             </Button>
           }
         />
-        <Separator className='my-4' />
         <AccountList />
       </CardContent>
     </Card>

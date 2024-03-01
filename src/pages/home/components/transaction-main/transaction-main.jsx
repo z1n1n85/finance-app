@@ -13,7 +13,7 @@ export default function TransactionMain() {
   return (
     <>
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="pt-6 flex flex-col h-full items-start">
           <ModalTransactionCreate
             triggerElement={
               <Button className='block mb-2'>

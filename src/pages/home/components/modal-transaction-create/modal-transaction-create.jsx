@@ -3,11 +3,20 @@ import { Input } from 'components/UI/input'
 import InputDate from 'components/UI/input-date'
 import { Button } from 'components/UI/button'
 import { Textarea } from "components/UI/textarea"
-import { Select } from 'components/UI/select'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from 'components/UI/select'
 import { UserDataContext } from 'context/user-data/user-data'
 import Modal from 'components/UI/modal'
 import { Badge } from 'components/UI/badge'
 import { Separator } from 'components/UI/separator'
+import { Label } from 'components/UI/label'
 
 export default function ModalTransactionCreate({ triggerElement }) {
   const { accounts, fetchTransactionsCreate, tags } = useContext(UserDataContext);
@@ -68,38 +77,50 @@ export default function ModalTransactionCreate({ triggerElement }) {
 
   return (
     <Modal
+      className='top-[30%] sm:top-[50%]'
       open={open}
       onOpenChange={setOpen}
       triggerElement={triggerElement}
       title='Добавьте новую операцию:'
       content={
         <form
-          className='grid gap-4 max-h-[400px] sm:max-h-[500px] overflow-y-auto px-2 py-1'
+          className='grid gap-4 max-h-[350px] sm:max-h-[450px] overflow-y-auto px-2 py-1'
           onSubmit={e => {
             createTransaction(e);
             setOpen(false);
           }}
         >
+          <Label htmlFor='transaction-type' className='mt-2'>Тип операции</Label>
           <Select
-            startValue={transaction.type}
-            onChange={newValue => setTransaction({ ...transaction, type: newValue })}
-            placeholder='Выберете тип операции'
-            options={[
-              { value: 'expenses', label: 'Расходы' },
-              { value: 'income', label: 'Доходы' },
-            ]}
-          />
+            id='transaction-type'
+            defaultValue={transaction.type}
+            onValueChange={newValue => setTransaction({ ...transaction, type: newValue })}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder='Не выбрано...' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value='expenses'>Расходы</SelectItem>
+                <SelectItem value='income'>Доходы</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Label htmlFor='transaction-time' className='mt-2'>Дата операции</Label>
           <InputDate
-            placeholder='Выберете дату...'
+            id='transaction-time'
+            placeholder='Не выбрано...'
             valueDate={transaction.time}
-            setValueDate={newValue => { setTransaction({ ...transaction, time: newValue }) }}
+            setValueDate={value => { setTransaction({ ...transaction, time: value }) }}
           />
+          <Label htmlFor='transaction-cost' className='mt-2'>Сумма операции</Label>
           <Input
+            id='transaction-cost'
             value={transaction.cost}
             onChange={e => setTransaction({ ...transaction, cost: Number(e.target.value) })}
             min='0'
             type='number'
-            placeholder='Сумма'
+            placeholder='Введите сумму...'
           />
           {/* <Select
             startValue={inputTag}
@@ -112,10 +133,12 @@ export default function ModalTransactionCreate({ triggerElement }) {
             searchPlaceholder='Найти тэг'
             searchEmpty='Ни один тэг не найден'
           /> */}
+          <Label htmlFor='transaction-tag' className='mt-2'>Тэги операции</Label>
           <Input
+            id='transaction-tag'
             value={inputTag}
             onChange={e => setInputTag(e.target.value)}
-            placeholder='Добавьте новый тэг...'
+            placeholder='Введите новый тэг...'
           />
           {(inputTag !== '' && !transaction.tags.includes(inputTag))
             ? <Button onClick={(e) => addTag(e)}> Добавить тег </Button>
@@ -126,7 +149,7 @@ export default function ModalTransactionCreate({ triggerElement }) {
             <div className='grid'>
               {transaction.tags.map((tag) =>
                 <div>
-                  <Separator className='mb-2'/>
+                  <Separator className='mb-2' />
                   <div className='flex justify-between mb-2'>
                     <Badge variant="secondary">{tag}</Badge>
                     <Button
@@ -142,33 +165,36 @@ export default function ModalTransactionCreate({ triggerElement }) {
             </div>
             : ''
           }
-          {(accounts)
-            ?
-            <Select
-              startValue={transaction.accountId.toString()}
-              onChange={newValue => {
-                setTransaction({
-                  ...transaction,
-                  accountId: newValue,
-                })
-              }}
-              placeholder='Выберете счёт операции'
-              options={accounts.map((account) => {
-                return { value: account._id, label: account.name }
-              })}
-            />
-            :
-            <Select
-              disabled
-              startValue=''
-              placeholder='Нет доступных счетов'
-            />
-          }
+          <Label htmlFor='transaction-account' className='mt-2'>Счёт операции</Label>
+          <Select
+            id='transaction-account'
+            disabled={(accounts?.length === 0) ? true : false}
+            defaultValue={transaction.accountId.toString()}
+            onValueChange={newValue => {
+              setTransaction({
+                ...transaction,
+                accountId: newValue,
+              })
+            }}
+          >
+            <SelectTrigger className="w-[225px]">
+              <SelectValue placeholder={(accounts?.length === 0) ? 'Нет доступных счетов' : 'Не выбранно...'} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {accounts?.map(account => 
+                  <SelectItem value={account._id}>{account.name}</SelectItem>
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Label htmlFor='transaction-description' className='mt-2'>Описание операции</Label>
           <Textarea
+            id='transaction-description'
             className="resize-none"
             value={transaction.description}
             onChange={e => setTransaction({ ...transaction, description: e.target.value })}
-            placeholder='Описание'
+            placeholder='Введите описание...'
           />
           {(transaction.cost && transaction.type && transaction.time && transaction.accountId)
             ? <Button type='submit'> Добавить </Button>

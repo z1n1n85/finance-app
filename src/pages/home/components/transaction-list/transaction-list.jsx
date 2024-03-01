@@ -8,11 +8,13 @@ export default function TransactionList() {
 
   if (!sortedTransactions || sortedTransactions.length === 0) {
     return (
-      <p className='text-4xl text-center mt-8 mb-8'>Операций нет</p>
+      <div className='flex items-center justify-center h-full w-full'>
+        <p className='text-xl text-gray-500 text-center mt-8 mb-8'>Операций нет</p>
+      </div>
     )
   }
   return (
-    <>
+    <div className='flex flex-col justify-start items-stretch h-full w-full'>
       {sortedTransactions.map((transaction) => 
         <>
           <Separator className="my-4" />
@@ -22,6 +24,6 @@ export default function TransactionList() {
           />
         </>
       )}
-    </>
+    </div>
   )
 }
