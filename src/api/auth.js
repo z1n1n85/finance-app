@@ -1,4 +1,4 @@
-import $api from "./index";
+import $api from "api/index";
 
 export default class AuthService{
   static async registration(email, password){

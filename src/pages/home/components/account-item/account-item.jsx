@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { CreditCard } from 'lucide-react';
-import {Button} from 'components/UI/button'
-import { UserDataContext } from '../../../../context/user-data/user-data'
+import { UserDataContext } from 'context/user-data/user-data'
+import { Button } from 'components/UI/button'
 
-export default function AccountItem({account}) {
+export function AccountItem({account}) {
   const {fetchAccountsDelete} = useContext(UserDataContext);
 
   return (

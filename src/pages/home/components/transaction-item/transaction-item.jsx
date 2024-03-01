@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { CreditCard } from 'lucide-react';
+import { formatDateMonth } from 'utils/date';
+import { UserDataContext } from 'context/user-data/user-data';
 import { Badge } from "components/UI/badge"
 import { Button } from 'components/UI/button';
-import { UserDataContext } from 'context/user-data/user-data';
-import { formatDateMonth } from 'utils/date';
-import ModalTransactionUpdate from 'pages/home/components/modal-transaction-update/modal-transaction-update';
+import { ModalTransactionUpdate } from 'pages/home/components/modal-transaction-update/modal-transaction-update';
 
-export default function TransactionItem({
+export  function TransactionItem({
   transaction
 }) {
   const { accounts, fetchTransactionsDelete } = useContext(UserDataContext);

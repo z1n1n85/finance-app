@@ -4,13 +4,12 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from 'components/UI/select'
 import { UserDataContext } from 'context/user-data/user-data'
 
-export default function TransactionFilter() {
+export function TransactionFilter() {
   const { filterParametrs, setFilterParametrs } = useContext(UserDataContext);
 
   return (

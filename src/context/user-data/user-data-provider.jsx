@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {UserDataContext} from './user-data'
-import { useFetching } from '../../hooks/use-fetching';
-import TransactionService from '../../api/transaction';
-import AccountService from '../../api/account';
+import { useFetching } from 'hooks/use-fetching';
+import TransactionService from 'api/transaction';
+import AccountService from 'api/account';
+import {UserDataContext} from 'context/user-data/user-data'
 
-export default function UserDataProvider({children}) {
+export function UserDataProvider({children}) {
   const [transactions, setTransactions] = useState('');
   const addTransaction = (transaction) => {
     setTransactions(prev => [...prev, transaction]);
@@ -130,6 +130,7 @@ export default function UserDataProvider({children}) {
   useEffect(() => {
     fetchTransactionsGetAll();
     fetchAccountsGetAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (accounts) {

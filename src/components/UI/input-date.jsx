@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { formatDateMonth } from 'utils/date'
 import { cn } from "lib/utils"
 import { format } from 'date-fns';
@@ -12,7 +12,7 @@ import {
 import { Calendar } from "components/UI/calendar"
 import { Button } from 'components/UI/button'
 
-export default function InputDate({ placeholder, valueDate, setValueDate }) {
+export function InputDate({ placeholder, valueDate, setValueDate }) {
   return (
     <Popover>
       <PopoverTrigger asChild>

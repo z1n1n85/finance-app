@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../context/auth/auth';
-import Page from 'components/UI/page';
+import { AuthContext } from 'context/auth/auth';
+import { Page } from 'components/UI/page';
 import {
   Card,
   CardContent,
 } from "components/UI/card"
 
-export default function Activated() {
+export function Activated() {
   const { user } = useContext(AuthContext);
 
   return (

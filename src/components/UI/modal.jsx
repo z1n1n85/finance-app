@@ -2,16 +2,14 @@ import React from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogClose,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "components/UI/dialog"
 import { cn } from "lib/utils"
 
-export default function Modal({triggerElement, title, description, content, className, ...props}) {
+export function Modal({triggerElement, title, description, content, className, ...props}) {
   return (
     <Dialog {...props}>
       <DialogTrigger asChild>

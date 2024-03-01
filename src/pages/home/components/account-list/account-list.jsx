@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import AccountItem from '../account-item/account-item'
 import { UserDataContext } from 'context/user-data/user-data'
 import { Separator } from "components/UI/separator"
+import { AccountItem } from 'pages/home/components/account-item/account-item'
 
-export default function AccountList() {
+export function AccountList() {
   const { accounts } = useContext(UserDataContext);
 
   if (!accounts || accounts.length === 0) {

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
+import { UserDataContext } from 'context/user-data/user-data'
 import { Input } from 'components/UI/input'
 import { Button } from 'components/UI/button'
 import { Label } from 'components/UI/label'
-import { UserDataContext } from 'context/user-data/user-data'
-import Modal from 'components/UI/modal'
+import { Modal } from 'components/UI/modal'
 
-export default function ModalAccountCreate({ triggerElement }) {
+export function ModalAccountCreate({ triggerElement }) {
   const { fetchAccountsCreate } = useContext(UserDataContext);
 
   const [open, setOpen] = useState(false);

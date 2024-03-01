@@ -1,32 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { AuthContext } from 'context/auth/auth';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "components/UI/card";
 import { Input } from 'components/UI/input';
 import { Button } from 'components/UI/button';
-import { AuthContext } from '../../context/auth/auth';
 import { Switch } from 'components/UI/switch';
 
-export default function AuthForm({ authFunction, buttonText, title, footerText, footerLinkText, footerLink }) {
+export function AuthForm({ authFunction, buttonText, title, footerText, footerLinkText, footerLink }) {
   const { error, setError } = useContext(AuthContext);
   const [passInputType, setPassInputType] = useState('password');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const changePassInputType = () => {
-    (passInputType == 'password')
+    (passInputType === 'password')
     ? setPassInputType('text')
     : setPassInputType('password')
   }
 
   useEffect(() => {
     setError('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

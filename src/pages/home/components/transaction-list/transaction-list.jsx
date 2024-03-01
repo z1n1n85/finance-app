@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import TransactionItem from 'pages/home/components/transaction-item/transaction-item'
+import { TransactionItem } from 'pages/home/components/transaction-item/transaction-item'
 import { UserDataContext } from 'context/user-data/user-data'
 import { Separator } from "components/UI/separator"
 
-export default function TransactionList() {
+export function TransactionList() {
   const {sortedTransactions} = useContext(UserDataContext);
 
   if (!sortedTransactions || sortedTransactions.length === 0) {

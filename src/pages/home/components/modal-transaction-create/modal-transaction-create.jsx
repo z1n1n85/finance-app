@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { UserDataContext } from 'context/user-data/user-data'
 import { Input } from 'components/UI/input'
-import InputDate from 'components/UI/input-date'
+import { InputDate } from 'components/UI/input-date'
 import { Button } from 'components/UI/button'
 import { Textarea } from "components/UI/textarea"
 import {
@@ -8,18 +9,16 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from 'components/UI/select'
-import { UserDataContext } from 'context/user-data/user-data'
-import Modal from 'components/UI/modal'
+import { Modal } from 'components/UI/modal'
 import { Badge } from 'components/UI/badge'
 import { Separator } from 'components/UI/separator'
 import { Label } from 'components/UI/label'
 
-export default function ModalTransactionCreate({ triggerElement }) {
-  const { accounts, fetchTransactionsCreate, tags } = useContext(UserDataContext);
+export function ModalTransactionCreate({ triggerElement }) {
+  const { accounts, fetchTransactionsCreate } = useContext(UserDataContext);
 
   const [open, setOpen] = useState(false);
 
@@ -61,19 +60,6 @@ export default function ModalTransactionCreate({ triggerElement }) {
       return { ...prev, tags: prev.tags.filter((eTag) => eTag !== tag) }
     })
   }
-  const initRankedTags = () => {
-    let rankedTags = [];
-    if (tags) {
-      tags.sort((a, b) => a[1] - b[1]);
-      rankedTags = tags.map((e) => e[0])
-    }
-    return rankedTags;
-  }
-  const [rankedTags, setRankedTags] = useState(initRankedTags);
-
-  useEffect(() => {
-    setRankedTags(initRankedTags());
-  }, [tags]);
 
   return (
     <Modal
@@ -122,17 +108,6 @@ export default function ModalTransactionCreate({ triggerElement }) {
             type='number'
             placeholder='Введите сумму...'
           />
-          {/* <Select
-            startValue={inputTag}
-            onChange={newValue => setInputTag(newValue)}
-            placeholder='Добавьте тэги...'
-            options={rankedTags.map((rankedTag) => {
-              return { value: rankedTag, label: rankedTag }
-            })}
-            isSearch={true}
-            searchPlaceholder='Найти тэг'
-            searchEmpty='Ни один тэг не найден'
-          /> */}
           <Label htmlFor='transaction-tag' className='mt-2'>Тэги операции</Label>
           <Input
             id='transaction-tag'

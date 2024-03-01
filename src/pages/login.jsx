@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import { AuthContext } from 'context/auth/auth';
-import AuthForm from 'components/auth-form/auth-form';
-import Page from 'components/UI/page'
+import { AuthForm } from 'components/auth-form/auth-form';
+import { Page } from 'components/UI/page'
 
-export default function Register() {
+export function Login() {
   const {login} = useContext(AuthContext);
 
   return (

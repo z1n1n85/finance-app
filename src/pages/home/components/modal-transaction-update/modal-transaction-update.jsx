@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { UserDataContext } from 'context/user-data/user-data'
 import { Input } from 'components/UI/input'
-import InputDate from 'components/UI/input-date'
+import { InputDate } from 'components/UI/input-date'
 import { Button } from 'components/UI/button'
 import { Textarea } from "components/UI/textarea"
 import {
@@ -8,17 +9,15 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from 'components/UI/select'
-import { UserDataContext } from 'context/user-data/user-data'
-import Modal from 'components/UI/modal'
+import { Modal } from 'components/UI/modal'
 import { Badge } from 'components/UI/badge'
 import { Separator } from 'components/UI/separator'
 import { Label } from 'components/UI/label'
 
-export default function ModalTransactionUpdate({ triggerElement, transactionUpdate }) {
+export function ModalTransactionUpdate({ triggerElement, transactionUpdate }) {
   const { accounts, fetchTransactionsUpdate, tags } = useContext(UserDataContext);
 
   const [open, setOpen] = useState(false);
@@ -51,8 +50,10 @@ export default function ModalTransactionUpdate({ triggerElement, transactionUpda
     return rankedTags;
   }
   const [rankedTags, setRankedTags] = useState(initRankedTags);
+  
   useEffect(() => {
     setRankedTags(initRankedTags());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags]);
 
   return (

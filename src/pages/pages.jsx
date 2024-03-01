@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Home from './home/home';
-import Signup from './signup';
-import Login from './login';
-import Activated from './activated';
-import { AuthContext } from '../context/auth/auth';
+import { Home } from 'pages/home/home';
+import { Signup } from 'pages/signup';
+import { Login } from 'pages/login';
+import { Activated } from 'pages/activated';
+import { AuthContext } from 'context/auth/auth';
 
-export default function Pages() {
+export function Pages() {
   const {isAuth, user} = useContext(AuthContext);
 
   return (
