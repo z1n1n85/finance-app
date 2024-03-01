@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { Sun, Moon, PiggyBank } from 'lucide-react';
-import { AuthContext } from '../../context/auth/auth'
+import { AuthContext } from 'context/auth/auth'
 import { UserSettingsContext } from 'context/user-settings/user-settings';
-import { Button } from '../UI/button';
+import { Button } from 'components/UI/button';
 
-export default function Navbar() {
+export function Navbar() {
   const { logout, isAuth } = useContext(AuthContext);
   const { themeMode, changeTheme } = useContext(UserSettingsContext);
 

@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { CreditCard } from 'lucide-react';
+import { formatDateMonth } from 'utils/date';
+import { UserDataContext } from 'context/user-data/user-data';
 import { Badge } from "components/UI/badge"
 import { Button } from 'components/UI/button';
-import { UserDataContext } from 'context/user-data/user-data';
-import { formatDateMonth } from 'utils/date';
-import Modal from 'components/UI/modal';
-import TransactionFormUpdate from '../transaction-form-update/transaction-form-update';
-import ModalTransactionUpdate from 'pages/home/components/modal-transaction-update/modal-transaction-update';
+import { ModalTransactionUpdate } from 'pages/home/components/modal-transaction-update/modal-transaction-update';
 
-export default function TransactionItem({
+export  function TransactionItem({
   transaction
 }) {
   const { accounts, fetchTransactionsDelete } = useContext(UserDataContext);
@@ -43,19 +41,6 @@ export default function TransactionItem({
         }
         transactionUpdate={transaction}
       />
-      {/* <Modal
-        title='Редактировать операцию:'
-        triggerElement={
-          <Button variant="secondary" className='mr-2 px-2 py-1 text-xs h-8 mt-2'>
-            Редактировать
-          </Button>
-        }
-        content={
-          <TransactionFormUpdate
-            transactionUpdate={transaction}
-          />
-        }
-      /> */}
       <Button variant="destructive" className='px-2 py-1 text-xs h-8 mt-2' onClick={() => fetchTransactionsDelete(transaction._id)}>
         Удалить
       </Button>

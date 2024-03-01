@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    --page-background: 270 100% 98.01%;
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -29,6 +30,7 @@
   }
 
   .dark {
+    --page-background: 252 32.3% 12.2%;
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
     --card: 224 71.4% 4.1%;
@@ -67,4 +69,8 @@
 
 [data-color-scheme="light"] {
   color-scheme: light;
+}
+
+.page-background{
+  background-color: hsl(var(--page-background));
 }

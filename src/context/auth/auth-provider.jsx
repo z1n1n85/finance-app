@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { AuthContext } from './auth';
-import AuthService from '../../api/auth';
 import axios from 'axios';
+import AuthService from 'api/auth';
+import { AuthContext } from 'context/auth/auth';
 
-export default function AuthProvider({children}) {
+export function AuthProvider({children}) {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
   const [error, setError] = useState('');
@@ -45,6 +45,7 @@ export default function AuthProvider({children}) {
       localStorage.removeItem('token');
       updateAuth(false);
       setUser({});
+      return response;
     } catch (e) {
       console.log(e.response.data.message, e.response.data.errors);
     }
@@ -64,6 +65,7 @@ export default function AuthProvider({children}) {
     if (localStorage.getItem('token')){
       checkAuth();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

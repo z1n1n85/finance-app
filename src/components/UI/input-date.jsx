@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { format } from "date-fns"
+import React from 'react'
 import { formatDateMonth } from 'utils/date'
 import { cn } from "lib/utils"
+import { format } from 'date-fns';
 
 import { CalendarIcon } from "lucide-react"
 import {
@@ -12,8 +12,7 @@ import {
 import { Calendar } from "components/UI/calendar"
 import { Button } from 'components/UI/button'
 
-export default function InputDate({placeholder, valueDate, setValueDate}) {
-
+export function InputDate({ placeholder, valueDate, setValueDate }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -36,7 +35,7 @@ export default function InputDate({placeholder, valueDate, setValueDate}) {
         <Calendar
           mode="single"
           selected={valueDate}
-          onSelect={setValueDate}
+          onSelect={(value) => setValueDate(format(value, 'T'))}
           disabled={(date) =>
             date > new Date() || date < new Date("1900-01-01")
           }
