@@ -163,7 +163,7 @@ export function ModalTransactionUpdate({ triggerElement, transactionUpdate }) {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {accounts.map(account => 
+                {accounts?.map(account => 
                   <SelectItem value={account._id}>{account.name}</SelectItem>
                 )}
               </SelectGroup>
