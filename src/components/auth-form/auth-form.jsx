@@ -14,6 +14,7 @@ import { Switch } from 'components/UI/switch';
 
 export function AuthForm({ authFunction, buttonText, title, footerText, footerLinkText, footerLink }) {
   const { error, setError } = useContext(AuthContext);
+  const [isWaitRes, setIsWaitRes] = useState(false);
   const [passInputType, setPassInputType] = useState('password');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -23,6 +24,11 @@ export function AuthForm({ authFunction, buttonText, title, footerText, footerLi
     ? setPassInputType('text')
     : setPassInputType('password')
   }
+
+  // useEffect(() => {
+  //   setError('');
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [error]);
 
   useEffect(() => {
     setError('');
@@ -36,9 +42,11 @@ export function AuthForm({ authFunction, buttonText, title, footerText, footerLi
       </CardHeader>
       <CardContent>
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            authFunction(email, password);
+            setIsWaitRes(true);
+            await authFunction(email, password);
+            setIsWaitRes(false);
           }}
         >
           <Input
@@ -65,6 +73,13 @@ export function AuthForm({ authFunction, buttonText, title, footerText, footerLi
             />
             <p>Показать пароль</p>
           </div>
+          {
+            (isWaitRes)
+            ? <div className='flex items-center mb-4'>
+              <p>Ождание ответа от сервера...</p>
+            </div>
+            : ''
+          }
           {
             (error)
               ? <div className='text-red-600 flex items-center mb-4'>

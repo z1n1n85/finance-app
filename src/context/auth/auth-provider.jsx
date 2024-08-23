@@ -21,8 +21,12 @@ export function AuthProvider({children}) {
       setUser(response.data.user);
       setError('');
     } catch (e) {
-      console.log(e.response.data.message, e.response.data.errors);
-      setError(e.response.data.message);
+      if (!e.response){
+        setError("Нет ответа от сервера");
+      } else {
+        console.error(e.response.data.message, e.response.data.errors);
+        setError(e.response.data.message);
+      }
     }
   }
 
